@@ -1,0 +1,47 @@
+<div class="main-container">
+
+    <!-- Select Breed -->
+
+    <mat-form-field appearance="outline">
+        <mat-label>Breeds</mat-label>
+            <mat-select>
+                <mat-option *ngFor="let breed of catsList" [value]="breed.name" (click)="getImages(breed.id)">
+                        {{breed.name}}
+                </mat-option>
+            </mat-select>
+    </mat-form-field>
+
+    <mat-grid-list [cols]="breakpoint" (window:resize)="onResize($event)" class="grid-list">
+
+        <!-- All Cats Images -->
+    
+        <div *ngIf="!images.length">
+            <mat-grid-tile *ngFor="let cat of cats" >
+                <div>
+                    <mat-card class="card">
+                        <img mat-card-image *ngIf="cat.image" [src]="cat.image.url" class="cat-image">
+                    </mat-card>
+                </div>
+            </mat-grid-tile>
+        </div>
+
+        <!-- Selected by Breed Cats Images -->
+
+        <div *ngIf="images.length">
+            <mat-grid-tile *ngFor="let catImage of images" >
+                <div>
+                    <mat-card class="card">
+                        <img mat-card-image *ngIf="catImage.url" [src]="catImage.url" class="cat-image">
+                    </mat-card>
+                </div>
+            </mat-grid-tile>
+        </div>
+
+    </mat-grid-list>
+
+    <mat-paginator [length]="length" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="OnPageChange($event)"></mat-paginator>
+
+</div>
+  
+
+

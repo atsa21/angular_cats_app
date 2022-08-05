@@ -1,0 +1,35 @@
+.main-container {
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    margin-top: 3%;
+    width: 70%;
+}
+
+.grid-list {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cats-box {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+}
+
+.card {
+    display: flex;
+    flex-direction: row;
+    width: 190px;
+    height: 190px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+    border-radius: 0;
+}
+
+.cat-image {
+    object-fit: cover;
+    width: 190px;
+    height: 190px;
+}
