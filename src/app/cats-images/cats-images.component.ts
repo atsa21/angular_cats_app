@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
+import { map, Observable, startWith } from 'rxjs';
 import { Cat } from '../models/cat.model';
 import { Image } from '../models/image.model';
 import { CatsapidataService } from '../services/catsapidata.service';
-
 
 @Component({
   selector: 'app-cats-images',
@@ -11,6 +12,9 @@ import { CatsapidataService } from '../services/catsapidata.service';
   styleUrls: ['./cats-images.component.css']
 })
 export class CatsImagesComponent implements OnInit {
+
+  breedsControl = new FormControl<string | Cat>('');
+  filteredOptions: Observable<Cat[]> | undefined;
 
   catsList: Cat[] = [];
   cats: Cat[] = [];
@@ -35,6 +39,26 @@ export class CatsImagesComponent implements OnInit {
       this.length = this.cats.length;
       this.cats = this.catsList.slice(0, 10);
     });
+  }
+
+  displayBreeds(){
+    this.filteredOptions = this.breedsControl.valueChanges.pipe(
+      startWith(''),
+      map(value => {
+        const name = typeof value === 'string' ? value : value?.name;
+        return name ? this._filter(name as string) : this.catsList.slice();
+      }),
+    );
+  }
+
+  displayFn(user: Cat): string {
+    return user && user.name ? user.name : '';
+  }
+
+  private _filter(name: string): Cat[] {
+    const filterValue = name.toLowerCase();
+
+    return this.catsList.filter(option => option.name.toLowerCase().includes(filterValue));
   }
 
   getImages(breedId: string | undefined){

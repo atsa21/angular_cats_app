@@ -2,14 +2,17 @@
 
     <!-- Select Breed -->
 
-    <mat-form-field appearance="outline">
-        <mat-label>Breeds</mat-label>
-            <mat-select>
-                <mat-option *ngFor="let breed of catsList" [value]="breed.name" (click)="getImages(breed.id)">
-                        {{breed.name}}
-                </mat-option>
-            </mat-select>
-    </mat-form-field>
+    <form (click)="displayBreeds()">
+        <mat-form-field appearance="outline">
+          <mat-label>Breeds</mat-label>
+          <input type="text" matInput [formControl]="breedsControl" [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="getImages(option.id)">
+              {{option.name}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+    </form>
 
     <mat-grid-list [cols]="breakpoint" (window:resize)="onResize($event)" class="grid-list">
 

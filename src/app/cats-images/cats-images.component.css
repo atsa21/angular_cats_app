@@ -6,6 +6,10 @@
     width: 70%;
 }
 
+mat-form-field {
+    width: 100%;
+}
+
 .grid-list {
     display: flex;
     justify-content: space-between;
