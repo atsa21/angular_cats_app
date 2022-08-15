@@ -6,6 +6,13 @@
     width: 70%;
 }
 
+form {
+    display: flex;
+    justify-content: flex-end;
+    gap: 16px;
+    width: 100%;
+}
+
 .grid-list {
     display: flex;
     justify-content: space-between;
@@ -32,4 +39,13 @@
     object-fit: cover;
     width: 190px;
     height: 190px;
+}
+
+.refresh-btn {
+    box-shadow: none;
+    margin-top: 8px;
+}
+
+mat-icon {
+    color: white;
 }

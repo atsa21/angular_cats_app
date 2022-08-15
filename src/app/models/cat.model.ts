@@ -1,5 +1,5 @@
 export interface Cat {
-    name?: string;
+    name: string;
     id?: string;
     description?: string;
     temperament?: string;
