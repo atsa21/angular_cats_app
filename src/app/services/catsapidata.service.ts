@@ -10,28 +10,40 @@ import { Image } from '../models/image.model';
 })
 export class CatsapidataService {
 
-  myapikey="write-your-api-code";  //write your API key
+  myapikey="write-your-api-key"; //write your API key
+
+  headers = new HttpHeaders({
+    'x-api-key': this.myapikey
+  });
 
   constructor(private http: HttpClient) { }
 
   getCats(): Observable<Cat[]> {
-    const headers = new HttpHeaders({
-      'x-api-key': this.myapikey
-    });
+    
+    let headers = this.headers;
+    
     return this.http.get<Cat[]>('https://api.thecatapi.com/v1/breeds/', {headers});
   }
 
-  getImages(breedId: string): Observable<Image[]> {
-    const headers = new HttpHeaders({
-      'x-api-key': this.myapikey
-    });
-
+  getAllImages(): Observable<Image[]> {
+    
+    let headers = this.headers;
     let query_params = {
-      breed_ids: breedId,
-      limit: 60,
+      limit: 30,
     }
-    return this.http.get<Image[]>('https://api.thecatapi.com/v1/images/search', {headers, params: query_params});
+
+    return this.http.get<Image[]>(`https://api.thecatapi.com/v1/images/search`, {headers, params: query_params});
   }
 
+  getBreedImages(breedId: string): Observable<Image[]> {
+    
+    let headers = this.headers;
+    let query_params = {
+      breed_ids: breedId,
+      limit: 30,
+    }
+
+    return this.http.get<Image[]>(`https://api.thecatapi.com/v1/images/search`, {headers, params: query_params});
+  }
 
 }

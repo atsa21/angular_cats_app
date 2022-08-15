@@ -27,6 +27,7 @@ export class CatsImagesComponent implements OnInit {
   pageSizeOptions: number[] = [10, 20, 40];
   pageEvent: PageEvent | undefined;
   breakpoint: number = 10;  
+  breedId = '';
 
   constructor(private api: CatsapidataService) {}
 
@@ -36,9 +37,8 @@ export class CatsImagesComponent implements OnInit {
     .subscribe((cats: Cat[]) => {
       this.catsList = cats;
       this.cats = this.catsList;
-      this.length = this.cats.length;
-      this.cats = this.catsList.slice(0, 10);
     });
+    this.getImages(this.breedId);
   }
 
   displayBreeds(){
@@ -61,9 +61,9 @@ export class CatsImagesComponent implements OnInit {
     return this.catsList.filter(option => option.name.toLowerCase().includes(filterValue));
   }
 
-  getImages(breedId: string | undefined){
-    if(typeof breedId === 'string'){
-      this.api.getImages(breedId)
+  getImages(breedId: string | undefined) {
+    if(breedId){
+      this.api.getBreedImages(breedId)
       .subscribe((images: Image[]) => {
         this.imagesList = images;
         this.images = this.imagesList;
@@ -71,7 +71,13 @@ export class CatsImagesComponent implements OnInit {
         this.images = this.imagesList.slice(0, 10);
       });
     } else {
-      alert ('Breed Id is not defined')
+      this.api.getAllImages()
+      .subscribe((images: Image[]) => {
+        this.imagesList = images;
+        this.images = this.imagesList;
+        this.length = this.images.length;
+        this.images = this.imagesList.slice(0, 10);
+      });
     }
   }
 

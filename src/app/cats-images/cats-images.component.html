@@ -7,34 +7,27 @@
           <mat-label>Breeds</mat-label>
           <input type="text" matInput [formControl]="breedsControl" [matAutocomplete]="auto">
           <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option (click)="getImages('')">All breeds </mat-option>
             <mat-option *ngFor="let option of filteredOptions | async" [value]="option" (click)="getImages(option.id)">
               {{option.name}}
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
+        
+        <button mat-mini-fab color="accent" class="refresh-btn" (click)="getImages('')">
+            <mat-icon>replay</mat-icon>
+        </button>
     </form>
 
     <mat-grid-list [cols]="breakpoint" (window:resize)="onResize($event)" class="grid-list">
 
-        <!-- All Cats Images -->
+        <!-- Cats Images -->
     
-        <div *ngIf="!images.length">
-            <mat-grid-tile *ngFor="let cat of cats" >
+        <div>
+            <mat-grid-tile *ngFor="let image of images" >
                 <div>
                     <mat-card class="card">
-                        <img mat-card-image *ngIf="cat.image" [src]="cat.image.url" class="cat-image">
-                    </mat-card>
-                </div>
-            </mat-grid-tile>
-        </div>
-
-        <!-- Selected by Breed Cats Images -->
-
-        <div *ngIf="images.length">
-            <mat-grid-tile *ngFor="let catImage of images" >
-                <div>
-                    <mat-card class="card">
-                        <img mat-card-image *ngIf="catImage.url" [src]="catImage.url" class="cat-image">
+                        <img mat-card-image *ngIf="image.url" [src]="image.url" class="cat-image">
                     </mat-card>
                 </div>
             </mat-grid-tile>
